@@ -1,10 +1,21 @@
-(function (window) {
+(function (window, undefined) {
   'use strict';
 
-  var doc   = window.document
-    , _eval = window['eval'];
+  var doc     = window.document
+    , _eval   = window['eval']
+    , globals = Object.getOwnPropertyNames(window);
+
+  function cleanUp () {
+    Object.getOwnPropertyNames(window).forEach(function (key) {
+      if (globals.indexOf(key) === -1) {
+        window[key] = undefined;
+      }
+    });
+  }
 
   function load (html) {
+    cleanUp();
+
     doc.open();
     doc.write(html);
     doc.close();
