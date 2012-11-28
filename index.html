@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <link rel=stylesheet href=vendor/codemirror.css>
+  </head>
 
   <body>
-
-    <script src="lib/stuff.js"></script>
+    <div></div>
+    <script src="require_config.js"></script>
+    <script src="vendor/require.js"></script>
+    <script src="vendor/codemirror.js"></script>
+    <div id="editor"></div>
     <script>
-    stuffjs('http://localhost:8888/index.html', function (stuff) {
-      window.stuff = stuff;
-      stuff.load('<div>shit</div>');
-      // stuff.evaljs('1+1', function () {
-      //   console.log(arguments)
-      // })
+      var $ = document.querySelector.bind(document);
+    </script>
+    <script>
+    require(['lib/stuff'], function (stuffjs) {
+      stuffjs('http://localhost:8888/index.html', function (stuff) {
+        window.stuff = stuff;
+        var editor = CodeMirror($('#editor'), {
+          onChange: function () {
+            stuff.load(editor.getValue())
+          }
+        });
+      });
     });
+    
     </script>
   </body>
 
