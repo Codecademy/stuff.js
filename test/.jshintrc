@@ -1,0 +1,20 @@
+{ "eqeqeq": true
+, "latedef": true
+, "newcap": true
+, "noarg": true
+, "sub": true
+, "undef": true
+, "boss": true
+, "eqnull": true
+, "browser": true
+, "laxcomma": true
+, "laxbreak": true
+, "strict": true
+, "evil": true
+, "unused": true
+, "predef": {
+    "define": false
+  , "it": false
+  , "describe": false
+  }
+}
