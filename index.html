@@ -19,7 +19,7 @@
         window.stuff = stuff;
         var editor = CodeMirror($('#editor'), {
           onChange: function () {
-            stuff.load(editor.getValue())
+            stuff.load(editor.getValue());
           }
         });
       });
