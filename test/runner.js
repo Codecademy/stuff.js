@@ -34,9 +34,16 @@ define(function (require, exports) {
          });
       });
 
+      var testHtml = '<html><head></head><body>wat</body></html>';
       it('should load some html', function (done) {
-        var testHtml = '<html><body>wat</body></html>'
         context.load(testHtml, function () {
+          done();
+        });
+      });
+
+      it('should should tell it\'s html', function (done) {
+        context.html(function (html) {
+          assert.equal(html, testHtml);
           done();
         });
       });

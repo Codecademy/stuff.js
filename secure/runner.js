@@ -67,9 +67,7 @@
   }
 
   function html () {
-    post('html', {
-      data: document.documentElement.innerHTML
-    });
+    post('html', document.documentElement.outerHTML);
   }
 
   var actions = {
