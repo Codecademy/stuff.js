@@ -24,8 +24,12 @@
     bindMessaging();
   }
 
-  function post (obj) {
-    window.top.postMessage(obj, '*');
+  function post (type, data) {
+    var msg = {
+      data: data
+    , type: type
+    };
+    window.top.postMessage(msg, '*');
   }
 
   function report (err, res) {
@@ -39,12 +43,12 @@
       };
     }
     try {
-      post({
+      post('evaljs', {
         error  : err
       , result : res
       });
     } catch (e) {
-      post({
+      post('evaljs', {
         error  : err
       , result : JSON.stringify(res)
       });
@@ -62,9 +66,16 @@
     report(null, res);
   }
 
+  function html () {
+    post('html', {
+      data: document.documentElement.innerHTML
+    });
+  }
+
   var actions = {
     load   : load
   , evaljs : evaljs
+  , html   : html
   };
 
   function bindMessaging () {
