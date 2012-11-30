@@ -26,7 +26,9 @@ define(function (require, exports) {
     });
 
     describe('Context', function () {
-      var context;
+      var testHtml = '<html><head></head><body>wat</body></html>'
+        , context;
+
       before(function (done) {
          stuff(path, function (c) {
             context = c;
@@ -34,17 +36,20 @@ define(function (require, exports) {
          });
       });
 
-      var testHtml = '<html><head></head><body>wat</body></html>';
-      it('should load some html', function (done) {
-        context.load(testHtml, function () {
-          done();
+      describe('#load', function () {        
+        it('should load some html', function (done) {
+          context.load(testHtml, function () {
+            done();
+          });
         });
       });
 
-      it('should should tell it\'s html', function (done) {
-        context.html(function (html) {
-          assert.equal(html, testHtml);
-          done();
+      describe('#html', function () {        
+        it('should should tell it\'s html', function (done) {
+          context.html(function (html) {
+            assert.equal(html, testHtml);
+            done();
+          });
         });
       });
 
