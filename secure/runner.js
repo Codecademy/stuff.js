@@ -2,32 +2,28 @@
   'use strict';
 
   var doc     = win.document
-    , _eval   = win['eval']
-    , globals = Object.getOwnPropertyNames(win)
+    , body    = doc.querySelector('body')
+    , iframe
     , secret;
 
-  function cleanUp () {
-    // Need to access global reference of window for opera bug.
-    Object.getOwnPropertyNames(window).forEach(function (key) {
-      if (globals.indexOf(key) === -1) {
-        try {
-          window[key] = undefined;
-        } catch (e) {
-          // Cannot modify.
-        }
-      }
-    });
+
+  function reset () {
+    if (iframe) body.removeChild(iframe);
+    iframe = doc.createElement('iframe');
+    iframe.setAttribute('width', '100%');
+    iframe.setAttribute('height', '100%');
+    body.appendChild(iframe);
   }
 
   function load (html) {
-    cleanUp();
-
-    doc.open();
-    doc.write(html);
-    doc.close();
-
-    // looses bound events    
-    bindMessaging();     
+    reset();
+    iframe.addEventListener('load', function () {
+      post('load', null);
+    }, false);
+    var d = iframe.contentWindow.document;
+    d.open();
+    d.write(html);
+    d.close();
   }
 
   function post (type, data) {
@@ -63,9 +59,11 @@
   }
 
   function evaljs (js) {
-    var res = null;
+    var win = iframe.contentWindow
+      , res = null;
+
     try {
-      res = _eval(js);
+      res = win['eval'](js);
     } catch (e) {
       report(e, null);
       throw e;
@@ -74,7 +72,7 @@
   }
 
   function html () {
-    post('html', doc.documentElement.outerHTML);
+    post('html', iframe.contentWindow.document.documentElement.outerHTML);
   }
 
   var actions = {
@@ -83,22 +81,19 @@
   , html   : html
   };
 
-  function bindMessaging () {
-    win.addEventListener('message', function (e) {
-      var msg  = e.data
-        , type = msg.type
-        , data = msg.data;
+  win.addEventListener('message', function (e) {
+    var msg  = e.data
+      , type = msg.type
+      , data = msg.data;
 
-      if (!msg.secret) return;
-      if (!secret && msg.type === 'handshake') {
-        secret = msg.secret;
-      } else if (msg.secret !== secret) {
-        return;
-      } else {
-        actions[type](data);  
-      }
-    }, false);
-  }
+    if (!msg.secret) return;
+    if (!secret && msg.type === 'handshake') {
+      secret = msg.secret;
+    } else if (msg.secret !== secret) {
+      return;
+    } else {
+      actions[type](data);  
+    }
+  }, false);
 
-  bindMessaging();
 })(window);

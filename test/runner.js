@@ -3,7 +3,7 @@ define(function (require, exports) {
   var stuff = require('lib/stuff')
     , assert = require('vendor/assert');
 
-  var path = 'http://0.0.0.0:8888/index.html';
+  var path = 'http://localhost:8888/index.html';
 
   exports.init = function () {
     describe('Stuff', function () {
