@@ -26,8 +26,8 @@
     doc.write(html);
     doc.close();
 
-    // looses bound events
-    bindMessaging();
+    // looses bound events    
+    bindMessaging();     
   }
 
   function post (type, data) {
@@ -84,7 +84,7 @@
   };
 
   function bindMessaging () {
-    win.onmessage = function (e) {
+    win.addEventListener('message', function (e) {
       var msg  = e.data
         , type = msg.type
         , data = msg.data;
@@ -97,7 +97,7 @@
       } else {
         actions[type](data);  
       }
-    };  
+    }, false);
   }
 
   bindMessaging();
