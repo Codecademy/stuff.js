@@ -57,7 +57,21 @@ define(function (require, exports) {
         it('should do basic js eval', function (done) {
           context.evaljs('1+1', function (e, res) {
             if (e) throw e;
-            assert.equal(2, res);
+            assert.equal(res, 2);
+            done();
+          });
+        });
+
+        it('should pass errors of the right type', function (done) {
+          context.evaljs('{', function (e) {
+            assert.ok(e instanceof SyntaxError);
+            done();
+          });
+        });
+
+        it('should be able to handle native objects as return values', function (done) {
+          context.evaljs('alert', function (e, res) {
+            assert.ok(typeof res === 'string');
             done();
           });
         });

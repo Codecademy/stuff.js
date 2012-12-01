@@ -52,7 +52,7 @@
     } catch (e) {
       post('evaljs', {
         error  : err
-      , result : JSON.stringify(res)
+      , result : JSON.stringify(res) || String(res)
       });
     }
   }
