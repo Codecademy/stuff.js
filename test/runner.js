@@ -62,6 +62,16 @@ define(function (require, exports) {
           });
         });
       });
+
+      it('should not be concerned with messages from other than the iframe', function (done) {
+        context.callbacks['test'] = function () {
+          done(new Error('Fake message went through!'));
+        };
+        window.postMessage({
+          type: 'test'  
+        }, '*');
+        setTimeout(done, 1000);
+      });
     });
   };
 

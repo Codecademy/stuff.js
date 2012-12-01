@@ -3,7 +3,8 @@
 
   var doc     = window.document
     , _eval   = window['eval']
-    , globals = Object.getOwnPropertyNames(window);
+    , globals = Object.getOwnPropertyNames(window)
+    , secret;
 
   function cleanUp () {
     Object.getOwnPropertyNames(window).forEach(function (key) {
@@ -26,8 +27,9 @@
 
   function post (type, data) {
     var msg = {
-      data: data
-    , type: type
+      data   : data
+    , type   : type
+    , secret : secret
     };
     window.top.postMessage(msg, '*');
   }
@@ -78,10 +80,18 @@
 
   function bindMessaging () {
     window.onmessage = function (e) {
-      var d    = e.data
-        , type = d.type
-        , data = d.data ;
-      actions[type](data);
+      var msg  = e.data
+        , type = msg.type
+        , data = msg.data;
+
+      if (!msg.secret) return;
+      if (!secret && msg.type === 'handshake') {
+        secret = msg.secret;
+      } else if (msg.secret !== secret) {
+        return;
+      } else {
+        actions[type](data);  
+      }
     };  
   }
 
