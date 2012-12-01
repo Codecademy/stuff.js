@@ -54,10 +54,11 @@ define(function (require, exports) {
       });
 
       describe('#evaljs', function () {
-        it('should do basic js eval', function () {
+        it('should do basic js eval', function (done) {
           context.evaljs('1+1', function (e, res) {
             if (e) throw e;
             assert.equal(2, res);
+            done();
           });
         });
       });
