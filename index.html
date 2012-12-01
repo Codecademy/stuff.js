@@ -7,15 +7,14 @@
   <body>
     <div></div>
     <script src="require_config.js"></script>
-    <script src="vendor/require.js"></script>
+    <script src="lib/stuff.js"></script>
     <script src="vendor/codemirror.js"></script>
     <div id="editor"></div>
     <script>
       var $ = document.querySelector.bind(document);
     </script>
     <script>
-    require(['lib/stuff'], function (stuffjs) {
-      stuffjs('http://localhost:8888/index.html', function (stuff) {
+      stuff('http://localhost:8888/index.html', function (stuff) {
         window.stuff = stuff;
         var editor = CodeMirror($('#editor'), {
           onChange: function () {
@@ -23,8 +22,6 @@
           }
         });
       });
-    });
-    
     </script>
   </body>
 

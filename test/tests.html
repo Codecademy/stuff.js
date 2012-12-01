@@ -9,13 +9,11 @@
     <div id="mocha"></div>
     <script src="mocha.js"></script>
     <script>mocha.setup({ ui:'bdd', ignoreLeaks: true })</script>
-    <script src="../require_config.js"></script>
-    <script src="../vendor/require.js"></script>
+    <script src="/lib/stuff.js"></script>
+    <script src="/vendor/assert.js"></script>
+    <script src="test.js"></script>
     <script>
-      require(['test/runner'], function (runner) {
-        runner.init();
-        mocha.run();
-      });
+    mocha.run();
     </script>
   </body>
 </html>
