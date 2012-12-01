@@ -42,7 +42,7 @@
       , stack       : err.stack
       , type        : err.type
       , 'arguments' : err['arguments']
-      , errorType   : err.constructor.name
+      , errorType   : String(err.constructor).trim().match(/^function ([A-Z][a-zA-Z]+)/)[1]
       };
     }
     try {
