@@ -1,15 +1,20 @@
-(function (window, undefined) {
+(function (win, undefined) {
   'use strict';
 
-  var doc     = window.document
-    , _eval   = window['eval']
-    , globals = Object.getOwnPropertyNames(window)
+  var doc     = win.document
+    , _eval   = win['eval']
+    , globals = Object.getOwnPropertyNames(win)
     , secret;
 
   function cleanUp () {
+    // Need to access global reference of window for opera bug.
     Object.getOwnPropertyNames(window).forEach(function (key) {
       if (globals.indexOf(key) === -1) {
-        window[key] = undefined;
+        try {
+          window[key] = undefined;
+        } catch (e) {
+          // Cannot modify.
+        }
       }
     });
   }
@@ -31,7 +36,7 @@
     , type   : type
     , secret : secret
     };
-    window.top.postMessage(msg, '*');
+    win.top.postMessage(msg, '*');
   }
 
   function report (err, res) {
@@ -79,7 +84,7 @@
   };
 
   function bindMessaging () {
-    window.onmessage = function (e) {
+    win.onmessage = function (e) {
       var msg  = e.data
         , type = msg.type
         , data = msg.data;
