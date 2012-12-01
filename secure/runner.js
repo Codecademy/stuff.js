@@ -69,7 +69,7 @@
   }
 
   function html () {
-    post('html', document.documentElement.outerHTML);
+    post('html', doc.documentElement.outerHTML);
   }
 
   var actions = {
