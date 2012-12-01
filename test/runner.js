@@ -80,7 +80,7 @@ define(function (require, exports) {
         });
 
         it('should be able to handle native objects as return values', function (done) {
-          context.evaljs('alert', function (e, res) {
+          context.evaljs('Array', function (e, res) {
             assert.ok(typeof res === 'string');
             done();
           });

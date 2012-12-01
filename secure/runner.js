@@ -3,6 +3,8 @@
 
   var doc     = win.document
     , body    = doc.querySelector('body')
+    // IE9 bug.
+    , JSON    = win.JSON
     , iframe
     , secret;
 
@@ -27,11 +29,11 @@
   }
 
   function post (type, data) {
-    var msg = {
+    var msg = JSON.stringify({
       data   : data
     , type   : type
     , secret : secret
-    };
+    });
     win.top.postMessage(msg, '*');
   }
 
@@ -45,17 +47,11 @@
       , errorType   : String(err.constructor).trim().match(/^function ([A-Z][a-zA-Z]+)/)[1]
       };
     }
-    try {
-      post('evaljs', {
-        error  : err
-      , result : res
-      });
-    } catch (e) {
-      post('evaljs', {
-        error  : err
-      , result : JSON.stringify(res) || String(res)
-      });
-    }
+    if (typeof res === 'function') res = String(res);
+    post('evaljs', {
+      error  : err
+    , result : res
+    });
   }
 
   function evaljs (js) {
@@ -82,8 +78,13 @@
   };
 
   win.addEventListener('message', function (e) {
-    var msg  = e.data
-      , type = msg.type
+    var msg;
+    try {
+      msg  = JSON.parse(e.data);
+    } catch (err) {
+      return;
+    }
+    var type = msg.type
       , data = msg.data;
 
     if (!msg.secret) return;
