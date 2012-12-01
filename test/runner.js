@@ -62,6 +62,16 @@ define(function (require, exports) {
           });
         });
 
+        it('should persist', function (done) {
+          context.evaljs('x = 1', function (e, res) {
+            if (e) throw e;
+            context.evaljs('x', function (e, res) {
+              assert.equal(res, 1);
+              done();
+            });
+          });
+        });
+
         it('should pass errors of the right type', function (done) {
           context.evaljs('{', function (e) {
             assert.ok(e instanceof SyntaxError);
@@ -77,14 +87,27 @@ define(function (require, exports) {
         });
       });
 
-      it('should not be concerned with messages from other than the iframe', function (done) {
-        context.callbacks['test'] = function () {
-          done(new Error('Fake message went through!'));
-        };
-        window.postMessage({
-          type: 'test'  
-        }, '*');
-        setTimeout(done, 1000);
+      describe('misc', function () {        
+        it('should not be concerned with messages from other than the iframe', function (done) {
+          context.callbacks['test'] = function () {
+            done(new Error('Fake message went through!'));
+          };
+          window.postMessage({
+            type: 'test'  
+          }, '*');
+          setTimeout(done, 1000);
+        });
+
+        it('should delete all global names with each reload', function (done) {
+          context.evaljs('window.foo = 1', function () {
+            context.load('<html></html>', function () {
+              context.evaljs('window.foo', function (e, res) {
+                assert.equal(res, undefined);
+                done();
+              });
+            });
+          });
+        });
       });
     });
   };
