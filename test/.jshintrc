@@ -16,5 +16,6 @@
     "define": false
   , "it": false
   , "describe": false
+  , "before": false
   }
 }

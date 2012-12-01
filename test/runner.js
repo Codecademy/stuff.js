@@ -16,7 +16,7 @@ define(function (require, exports) {
 
       it('should clear all iframes', function (done) {
         // create one more.
-        stuff(path, function (context) {
+        stuff(path, function () {
           assert.equal(document.querySelectorAll('iframe').length, 2);
           stuff.clear();
           assert.equal(document.querySelectorAll('iframe').length, 0);
@@ -63,7 +63,7 @@ define(function (require, exports) {
         });
 
         it('should persist', function (done) {
-          context.evaljs('x = 1', function (e, res) {
+          context.evaljs('x = 1', function (e) {
             if (e) throw e;
             context.evaljs('x', function (e, res) {
               assert.equal(res, 1);
