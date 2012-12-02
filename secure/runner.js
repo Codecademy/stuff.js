@@ -13,7 +13,7 @@
     if (iframe) body.removeChild(iframe);
     iframe = doc.createElement('iframe');
     iframe.setAttribute('width', '100%');
-    iframe.setAttribute('height', '100%');
+    iframe.setAttribute('height', doc.height);
     body.appendChild(iframe);
   }
 
