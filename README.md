@@ -4,13 +4,13 @@ Stuff.js
 A secure way to run arbitrary HTML / JS / CSS code in an iframe.
 
 
-## Example
+## Run the example
 
 ```
-node dist/server.js
+node dist/example/server.js
 ```
 
-Navigate browser to http://localhost:8080/
+Navigate browser to http://localhost:8080/example
 
 
 
