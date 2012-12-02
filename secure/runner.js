@@ -1,4 +1,4 @@
-(function (win, undefined) {
+;(function (win, undefined) {
   'use strict';
 
   var doc     = win.document
