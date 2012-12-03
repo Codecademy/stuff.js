@@ -47,10 +47,11 @@ stuff(secureUrl, function (context) {
 
 ## API
 
-### stuff(url, cb(context))
+### stuff(url, [el], cb(context))
 
 The main constructor function that loads the secure iframe from `url` and
-calls `cb` with the context (see below).
+calls `cb` with the context (see below). Optionally pass in `el` which is
+the element the iframe should be appended to.
 
 ### stuff.clear()
 
@@ -73,3 +74,6 @@ and the result.
 
 Gets the current iframe document html.
 
+### Context#iframe
+
+Is just the iframe element available for DOM manipulation.

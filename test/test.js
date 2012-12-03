@@ -14,10 +14,19 @@
       });
     });
 
+    it('should append iframe to a custom element', function (done) {
+      var div = document.createElement('div');
+      document.body.appendChild(div);
+      stuff(path, div, function (context) {
+        assert.equal(div.querySelectorAll('iframe').length, 1);
+        done();
+      });
+    });
+
     it('should clear all iframes', function (done) {
       // create one more.
       stuff(path, function () {
-        assert.equal(document.querySelectorAll('iframe').length, 2);
+        assert.equal(document.querySelectorAll('iframe').length, 3);
         stuff.clear();
         assert.equal(document.querySelectorAll('iframe').length, 0);
         done();
