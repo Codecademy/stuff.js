@@ -96,27 +96,27 @@
       });
     });
 
-    describe('#on', function (done) {
-      it('should listen on custom events', function () {
+    describe('#on', function () {
+      it('should listen on custom events', function (done) {
         context.on('test', function (d) {
           assert.equal(d, 1);
         });
         context.on('test', function (d) {
           done();
         });
-        context.evaljs('window.top.stuffEmit("test", 1)', function () {});
+        context.evaljs('window.parent.stuffEmit("test", 1)', function () {});
       });
     });
 
-    describe('#off', function (done) {
-      it('should remove listeners from custom events', function () {
+    describe('#off', function () {
+      it('should remove listeners from custom events', function (done) {
         function foo (d) {
           throw new Error('fail');
         }
         context.on('foo', foo);
         context.on('foo', done);
         context.off('foo', foo);
-        context.evaljs('window.top.stuffEmit("test", 1)');
+        context.evaljs('window.parent.stuffEmit("foo")');
       });
     });
 
