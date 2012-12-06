@@ -74,6 +74,17 @@ and the result.
 
 Gets the current iframe document html.
 
+
+### Context#on(event, cb(data))
+
+Listen on custom events.
+To emit custom events in the iframe use `window.top.stuffEmit(event, data)`.
+
+### Context#off(event, [cb])
+
+Remove callback `cb` if specified. Otherwise nuke all listeners.
+
+
 ### Context#iframe
 
 Is just the iframe element available for DOM manipulation.
