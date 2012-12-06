@@ -117,7 +117,17 @@
           });
         });
       });
+
+      // Failing in 0.1.1
+      it('should respect callback order', function () {
+        context.evaljs('1');
+        context.evaljs('2');
+        context.evaljs('3', function (e, res) {
+          assert.equal(res, 3);
+        });
+      });
     });
   });
+
 
 })();
