@@ -96,11 +96,35 @@
       });
     });
 
-    describe('misc', function () {        
+    describe('#on', function (done) {
+      it('should listen on custom events', function () {
+        context.on('test', function (d) {
+          assert.equal(d, 1);
+        });
+        context.on('test', function (d) {
+          done();
+        });
+        context.evaljs('window.top.stuffEmit("test", 1)', function () {});
+      });
+    });
+
+    describe('#off', function (done) {
+      it('should remove listeners from custom events', function () {
+        function foo (d) {
+          throw new Error('fail');
+        }
+        context.on('foo', foo);
+        context.on('foo', done);
+        context.off('foo', foo);
+        context.evaljs('window.top.stuffEmit("test", 1)');
+      });
+    });
+
+    describe('misc', function () {
       it('should not be concerned with messages from other than the iframe', function (done) {
-        context.callbacks['test'] = function () {
+        context.eventQ['test'] = [function () {
           done(new Error('Fake message went through!'));
-        };
+        }];
         window.postMessage({
           type: 'test'  
         }, '*');

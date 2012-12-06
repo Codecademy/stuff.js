@@ -97,4 +97,11 @@
     }
   }, false);
 
+  win.stuffEmit = function (event, data) {
+    post('custom', {
+      type: event
+    , data: data
+    });
+  };
+
 })(window);
