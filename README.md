@@ -78,7 +78,7 @@ Gets the current iframe document html.
 ### Context#on(event, cb(data))
 
 Listen on custom events.
-To emit custom events in the iframe use `window.top.stuffEmit(event, data)`.
+To emit custom events in the iframe use `window.parent.stuffEmit(event, data)`.
 
 ### Context#off(event, [cb])
 
