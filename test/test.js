@@ -94,6 +94,22 @@
           done();
         });
       });
+
+      // Fails in 0.1.4
+      it('should be able to handle unknown error types', function (done) {
+        context.evaljs('throw "wat"', function (e) {
+          assert.equal(e, 'wat');
+          done();
+        });
+      });
+
+      // Fails in 0.1.4
+      it('should be able to handle sublcassed errors', function (done) {
+        context.evaljs('function E() {} E.prototype=new Error(); E.prototype.constructor = E; throw new E();', function (e) {
+          assert.equal(e.type, 'E');
+          done();
+        });
+      });
     });
 
     describe('#on', function () {

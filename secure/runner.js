@@ -5,6 +5,7 @@
     , body    = doc.querySelector('body')
     // IE9 bug.
     , JSON    = win.JSON
+    , contextError
     , iframe
     , secret;
 
@@ -22,6 +23,7 @@
     iframe.addEventListener('load', function () {
       post('load', null);
     }, false);
+    contextError = iframe.contentWindow.Error;
     var d = iframe.contentWindow.document;
     d.open();
     d.write(html);
@@ -38,7 +40,7 @@
   }
 
   function report (err, res) {
-    if (err) {
+    if (err && (err instanceof contextError)) {
       err = {
         message     : err.message
       , stack       : err.stack
