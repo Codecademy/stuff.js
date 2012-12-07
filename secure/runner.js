@@ -42,11 +42,11 @@
   function report (err, res) {
     if (err && (err instanceof contextError)) {
       err = {
-        message     : err.message
-      , stack       : err.stack
-      , type        : err.type
-      , 'arguments' : err['arguments']
-      , errorType   : String(err.constructor).trim().match(/^function ([A-Z][a-zA-Z]+)/)[1]
+        message       : err.message
+      , stack         : err.stack
+      , type          : err.type
+      , 'arguments'   : err['arguments']
+      , __errorType__ : String(err.constructor).trim().match(/^function ([^\(\s]+)/)[1]
       };
     }
     if (typeof res === 'function') res = String(res);

@@ -106,7 +106,7 @@
       // Fails in 0.1.4
       it('should be able to handle sublcassed errors', function (done) {
         context.evaljs('function E() {} E.prototype=new Error(); E.prototype.constructor = E; throw new E();', function (e) {
-          assert.equal(e.type, 'E');
+          assert.equal(e.__errorType__, 'E');
           done();
         });
       });
