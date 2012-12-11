@@ -75,16 +75,20 @@ and the result.
 Gets the current iframe document html.
 
 
-### Context#on(event, cb(data))
-
-Listen on custom events.
-To emit custom events in the iframe use `window.parent.stuffEmit(event, data)`.
-
-### Context#off(event, [cb])
-
-Remove callback `cb` if specified. Otherwise nuke all listeners.
-
-
 ### Context#iframe
 
 Is just the iframe element available for DOM manipulation.
+
+### Custom events
+
+Sometimes you may find yourself wanting to communicate back to the outside world from inside the execution
+context. You can do this simply by calling: `window.parent.stuffEmit(event, data)`. On the top window you
+can use the `Context#on` and `Context#off` to add or remove custom events.
+
+#### Context#on(event, cb(data))
+
+Listen on custom events.
+
+#### Context#off(event, [cb])
+
+Remove callback `cb` if specified. Otherwise nuke all listeners.
