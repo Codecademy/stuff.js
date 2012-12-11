@@ -92,3 +92,7 @@ Listen on custom events.
 #### Context#off(event, [cb])
 
 Remove callback `cb` if specified. Otherwise nuke all listeners.
+
+## License
+MIT License.  
+Copyright (c) 2012 Amjad Masad &lt;amjad@codecademy.com&gt; Ryzac, Inc.
