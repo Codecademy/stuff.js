@@ -81,6 +81,7 @@
         });
       });
 
+      // Failed in 0.1.5
       it('should pass errors of the right type', function (done) {
         context.evaljs('{', function (e) {
           assert.ok(e instanceof SyntaxError);

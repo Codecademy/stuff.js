@@ -5,7 +5,6 @@
     , body    = doc.querySelector('body')
     // IE9 bug.
     , JSON    = win.JSON
-    , contextError
     , iframe
     , secret;
 
@@ -23,7 +22,6 @@
     iframe.addEventListener('load', function () {
       post('load', null);
     }, false);
-    contextError = iframe.contentWindow.Error;
     var d = iframe.contentWindow.document;
     d.open();
     d.write(html);
@@ -40,7 +38,15 @@
   }
 
   function report (err, res) {
-    if (err && (err instanceof contextError)) {
+    var ContextError = iframe.contentWindow.Error;
+
+    // Safari and Opera thinks of doesn't diffrentiate between native error 
+    // type contexts where as others do.
+    if ( 
+         err                        && 
+         err instanceof Error       ||
+         err instanceof ContextError
+       ) {
       err = {
         message       : err.message
       , stack         : err.stack
@@ -57,11 +63,10 @@
   }
 
   function evaljs (js) {
-    var win = iframe.contentWindow
-      , res = null;
+    var res = null;
 
     try {
-      res = win['eval'](js);
+      res = iframe.contentWindow['eval'](js);
     } catch (e) {
       report(e, null);
       throw e;
