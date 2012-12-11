@@ -1,7 +1,7 @@
 Stuff.js
 --------
 
-A secure way to run arbitrary HTML / JS / CSS code in an iframe.
+A secure and easy way to run arbitrary HTML / JS / CSS code in an iframe.
 
 
 ## Run the example
