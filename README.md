@@ -93,6 +93,15 @@ Listen on custom events.
 
 Remove callback `cb` if specified. Otherwise nuke all listeners.
 
+## Browser support
+
+Tested on:
+
+* Latest Chrome and Firefox.
+* Opera 12+
+* IE9 and IE10
+* Safari 6
+
 ## License
 MIT License.  
 Copyright (c) 2012 Amjad Masad &lt;amjad@codecademy.com&gt; Ryzac, Inc.
