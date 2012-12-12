@@ -20,7 +20,9 @@
     if (iframe) body.removeChild(iframe);
     iframe = doc.createElement('iframe');
     iframe.setAttribute('width', '100%');
-    iframe.setAttribute('height', doc.height);
+    iframe.setAttribute(
+      'height', doc.height || doc.documentElement.scrollHeight
+    );
     body.appendChild(iframe);
   }
 
