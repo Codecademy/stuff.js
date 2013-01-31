@@ -52,7 +52,7 @@
     , type   : type
     , secret : secret
     });
-    win.top.postMessage(msg, '*');
+    win.parent.postMessage(msg, '*');
   }
 
   // Helper to the `evaljs` function to report back `err` and `res`.
