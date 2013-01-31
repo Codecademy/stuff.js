@@ -167,6 +167,21 @@
           assert.equal(res, 3);
         });
       });
+
+      it('should adapt inner iframe height to outer iframe height', function (done) {
+        context.iframe.style.height = '1000px';
+        // :poop:
+        setTimeout(function () {
+          context.evaljs(
+            'window.parent.document.querySelector("iframe").height'
+          , function (e, h) {
+              if (e) throw e;
+              assert.equal(h, 1000);
+              done();
+            }
+          );
+        }, 0);
+      });
     });
   });
 

@@ -14,15 +14,21 @@
     // Secret to use for communication with parent window.
     , secret;
 
+  // Sets the height of the inner document to match the outer.
+  function setHeight () {
+    if (iframe) {
+      iframe.setAttribute(
+        'height', doc.height || doc.documentElement.scrollHeight
+      );
+    }
+  }
 
   // Remove the old iframe and create a new one.
   function reset () {
     if (iframe) body.removeChild(iframe);
     iframe = doc.createElement('iframe');
     iframe.setAttribute('width', '100%');
-    iframe.setAttribute(
-      'height', doc.height || doc.documentElement.scrollHeight
-    );
+    setHeight();
     body.appendChild(iframe);
   }
 
@@ -137,6 +143,9 @@
       actions[type](data);  
     }
   }, false);
+
+  // Adapt to outer iframe resizes.
+  win.addEventListener('resize', setHeight);
 
   // Export an emit funciton on this window that could be accessible to the
   // iframe context to emit events to the parent window.
