@@ -7,19 +7,13 @@ var dev    = new(stat.Server)('./', {cache: 0})
   , secure = new(stat.Server)('./secure', {cache: 0});
 
 require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        dev.serve(request, response);
-    });
+  request.addListener('end', function () {
+    dev.serve(request, response);
+  });
 }).listen(8080);
 
 require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        secure.serve(request, response);
-    });
+  request.addListener('end', function () {
+    secure.serve(request, response);
+  });
 }).listen(8888);

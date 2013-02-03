@@ -3,6 +3,10 @@ Stuff.js
 
 A secure and easy way to run arbitrary HTML / JS / CSS code in an iframe.
 
+Stuff.js is a client-side JS library that is meant to be loaded from different [origins](https://developer.mozilla.org/en-US/docs/JavaScript/Same_origin_policy_for_JavaScript) to restrict access from the iframe to it's parent(s). [Read more](http://blog.amasad.me/2012/12/11/stuffjs/).
+
+Node is only required for testing and developlment and is only used as a static server. Feel free to use your web server of choice.
+
 
 ## Run the example
 
