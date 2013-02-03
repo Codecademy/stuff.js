@@ -77,7 +77,7 @@ Gets the current iframe document html.
 
 ### Context#iframe
 
-Is just the iframe element available for DOM manipulation.
+Is just the iframe element available for DOM manipulation. Note that if you move the iframe, it has to reload and will *lose all code and state*.
 
 ### Custom events
 
