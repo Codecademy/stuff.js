@@ -137,6 +137,34 @@
       });
     });
 
+    describe('callback API', function () {
+      it('should run callbacks with the current Context as context', function (done) {
+        var c = 0;
+        var callback = function  () {
+          assert.strictEqual(this, context);
+          if (++c === 3) done();
+        };
+        context.evaljs('1', callback);
+        context.load('foo', callback);
+        context.html(callback);
+        context.on('sup', callback);
+        context.evaljs('window.parent.stuffEmit("sup")');
+      });
+      it('should run callbacks with the supplied context', function (done) {
+        var c = 0
+          , thisArg = {};
+        var callback = function  () {
+          assert.strictEqual(this, thisArg);
+          if (++c === 3) done();
+        };
+        context.evaljs('1', callback, thisArg);
+        context.load('foo', callback, thisArg);
+        context.html(callback, thisArg);
+        context.on('sup', callback, thisArg);
+        context.evaljs('window.parent.stuffEmit("sup")');
+      });
+    });
+
     describe('misc', function () {
       it('should not be concerned with messages from other than the iframe', function (done) {
         context.eventQ['test'] = [function () {
