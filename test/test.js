@@ -180,10 +180,27 @@
               done();
             }
           );
-        }, 0);
+        }, 250);
+      });
+
+      // Failing in 0.1.7
+      it('should be able to make the iframe smaller to match the outer iframe', function (done) {
+        context.iframe.style.height = '1000px';
+        setTimeout(function () {
+          context.iframe.style.height = '500px';
+          setTimeout(function () {
+            context.evaljs(
+              'window.parent.document.querySelector("iframe").height'
+            , function (e, h) {
+                if (e) throw e;
+                assert.equal(h, 500);
+                done();
+              }
+            );
+          }, 250);
+        }, 250);
       });
     });
   });
-
 
 })();

@@ -17,6 +17,7 @@
   // Sets the height of the inner document to match the outer.
   function setHeight () {
     if (iframe) {
+      iframe.setAttribute('height', '');
       iframe.setAttribute(
         'height', doc.height || doc.documentElement.scrollHeight
       );
