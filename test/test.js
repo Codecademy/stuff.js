@@ -150,6 +150,7 @@
         context.on('sup', callback);
         context.evaljs('window.parent.stuffEmit("sup")');
       });
+
       it('should run callbacks with the supplied context', function (done) {
         var c = 0
           , thisArg = {};
@@ -162,6 +163,32 @@
         context.html(callback, thisArg);
         context.on('sup', callback, thisArg);
         context.evaljs('window.parent.stuffEmit("sup")');
+      });
+
+      it('should run callbacks with the current Context as context', function (done) {
+        var c = 0;
+        var callback = function  () {
+          assert.strictEqual(this, context);
+          if (++c === 3) done();
+        };
+        context.evaljs('1', callback);
+        context.load('foo', callback);
+        context.html(callback);
+        context.on('sup', callback);
+        context.evaljs('window.parent.stuffEmit("sup")');
+      });
+
+      // Failing in 0.2.0
+      it('should not require events to have callbacks', function (done) {
+        context.evaljs('window.parent.stuffEmit("noop")');
+        done();
+      });
+
+      it('callbacks are optional', function (done) {
+        context.on('foor');
+        context.html();
+        context.load('wat');
+        done();
       });
     });
 
