@@ -51,11 +51,17 @@ stuff(secureUrl, function (context) {
 
 ## API
 
-### stuff(url, [el], cb(context))
+### stuff(url, [options], cb(context))
 
 The main constructor function that loads the secure iframe from `url` and
-calls `cb` with the context (see below). Optionally pass in `el` which is
-the element the iframe should be appended to.
+calls `cb` with the context (see below). Optionally, you can pass in an
+options object as the second argument and can contain any of the following:
+
+* `el` an element to append the iframe to. Defaults to the body.
+* `sandbox` You can pass in a space delimited string of the [HTML5 sandbox flags](http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/) or simply `true` to add the attribute with the minimum flags needed to function:
+  * `allow-scripts` needed for the iframe to function.
+  *  `allow-same-origin` needed for basic interactions with the iframe.
+
 
 ### stuff.clear()
 

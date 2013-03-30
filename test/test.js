@@ -4,7 +4,8 @@
   var stuff  = window.stuff
     , assert = window.assert;
 
-  var path = 'http://localhost:8888/index.html';
+  var path = '/secure/index.html'
+    , sameOriginPath = '/secure/index.html';
 
   describe('Stuff', function () {
     it('should create iframe', function (done) {
@@ -17,21 +18,74 @@
     it('should append iframe to a custom element', function (done) {
       var div = document.createElement('div');
       document.body.appendChild(div);
-      stuff(path, div, function (context) {
+      stuff(path, div, function () {
         assert.equal(div.querySelectorAll('iframe').length, 1);
         done();
+      });
+    });
+
+    var sandboxSupported = 'sandbox' in document.createElement('iframe');
+
+    it('should not add the sandbox property unless specified', function (done) {
+      stuff(sameOriginPath, function (context) {
+        context.load('something nice', function () {
+          assert.ok(
+            !context.iframe.contentDocument.querySelector('iframe').getAttribute('sandbox')
+          );
+          done();
+        });
+      });
+    });
+
+    it('should add the iframe sandbox property', function (done) {
+      stuff(sameOriginPath, { sandbox: true }, function (context) {
+        context.load('something nice', function () {
+          assert.equal(
+            context.iframe.contentDocument.querySelector('iframe').getAttribute('sandbox')
+          , 'allow-scripts allow-same-origin'
+          );
+          if (sandboxSupported) {
+            context.evaljs('window.parent.location.hash = "bar"', function () {
+              assert.notEqual(location.hash, '#bar');
+              done();
+            });
+          } else {
+            done();
+          }
+        });
+      });
+    });
+
+    it('should allow custom flags in sandbox property', function (done) {
+      stuff(sameOriginPath, { sandbox: 'allow-top-navigation' }, function (context) {
+        context.load('something aweful', function () {
+          assert.equal(
+            context.iframe.contentDocument.querySelector('iframe').getAttribute('sandbox')
+          , 'allow-top-navigation allow-scripts allow-same-origin'
+          );
+          if (sandboxSupported) {
+            context.evaljs('window.top.location.hash = "foo"', function () {
+              assert.equal(location.hash, '#foo');
+              location.hash = '';
+              done();
+            });
+          } else {
+            done();
+          }
+        });
       });
     });
 
     it('should clear all iframes', function (done) {
       // create one more.
       stuff(path, function () {
-        assert.equal(document.querySelectorAll('iframe').length, 3);
+        assert.equal(document.querySelectorAll('iframe').length, 6);
         stuff.clear();
         assert.equal(document.querySelectorAll('iframe').length, 0);
         done();
       });
     });
+
   });
 
   describe('Context', function () {

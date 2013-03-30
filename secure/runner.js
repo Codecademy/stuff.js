@@ -12,7 +12,10 @@
     , iframe
 
     // Secret to use for communication with parent window.
-    , secret;
+    , secret
+
+    // Iframe sandbox http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
+    , sandbox;
 
   // Sets the height of the inner document to match the outer.
   function setHeight () {
@@ -29,6 +32,7 @@
     if (iframe) body.removeChild(iframe);
     iframe = doc.createElement('iframe');
     iframe.setAttribute('width', '100%');
+    if (typeof sandbox === 'string') iframe.setAttribute('sandbox', sandbox);
     setHeight();
     body.appendChild(iframe);
   }
@@ -136,6 +140,7 @@
 
       // Set the current secret.
       secret = msg.secret;
+      sandbox = msg.data;
     } else if (msg.secret !== secret) {
       return;
     } else {
