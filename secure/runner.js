@@ -21,9 +21,9 @@
   function setHeight () {
     if (iframe) {
       iframe.setAttribute('height', '');
-      iframe.setAttribute(
-        'height', doc.height || doc.documentElement.scrollHeight
-      );
+      var docHeight = doc.height || doc.documentElement.scrollHeight;
+      var height = docHeight && docHeight > 0 ? docHeight : '100%';
+      iframe.setAttribute('height', height);
     }
   }
 
