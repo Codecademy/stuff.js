@@ -99,7 +99,7 @@
        });
     });
 
-    describe('#load', function () {        
+    describe('#load', function () {
       it('should load some html', function (done) {
         context.load(testHtml, function () {
           done();
@@ -107,7 +107,7 @@
       });
     });
 
-    describe('#html', function () {        
+    describe('#html', function () {
       it('should should tell it\'s html', function (done) {
         context.html(function (html) {
           assert.equal(html, testHtml);
@@ -252,7 +252,7 @@
           done(new Error('Fake message went through!'));
         }];
         window.postMessage({
-          type: 'test'  
+          type: 'test'
         }, '*');
         setTimeout(done, 1000);
       });
@@ -282,7 +282,7 @@
         // :poop:
         setTimeout(function () {
           context.evaljs(
-            'window.parent.document.querySelector("iframe").height'
+            'window.parent.document.querySelector("iframe").clientHeight'
           , function (e, h) {
               if (e) throw e;
               assert.equal(h, 1000);
@@ -299,7 +299,7 @@
           context.iframe.style.height = '500px';
           setTimeout(function () {
             context.evaljs(
-              'window.parent.document.querySelector("iframe").height'
+              'window.parent.document.querySelector("iframe").clientHeight'
             , function (e, h) {
                 if (e) throw e;
                 assert.equal(h, 500);
