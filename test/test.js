@@ -246,6 +246,20 @@
       });
     });
 
+    describe('stuffOn', function () {
+      it('should listen and emit custom events', function (done) {
+        context.evaljs(
+          'window.parent.stuffOn("foo",' +
+          'function(data) { window.parent.stuffEmit("bar", data) })'
+        );
+        context.emit('foo', { x: 1, y: 2 });
+        context.on('bar', function(data) {
+          assert.deepEqual(data, { x: 1, y: 2 });
+          done();
+        });
+      });
+    });
+
     describe('misc', function () {
       it('should not be concerned with messages from other than the iframe', function (done) {
         context.eventQ['test'] = [function () {

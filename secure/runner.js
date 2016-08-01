@@ -144,9 +144,10 @@
     } else if (msg.secret !== secret) {
       return;
     } else {
+      if (!actions[type]) throw new Error('No listeners for event:' + type);
 
       // Route message to the correct action.
-      actions[type](data);  
+      actions[type](data);
     }
   }, false);
 
@@ -162,4 +163,22 @@
     });
   };
 
+  function customEventName(event) {
+    return '_custom_' + event;
+  }
+
+  // Listen to custom events sent from the top window.
+  win.stuffOn = function (event, callback) {
+    var eventName = customEventName(event);
+    if (actions[eventName]) {
+      throw new Error('Already subscribed to this event');
+    }
+    actions[eventName] = callback;
+  }
+
+  // Remove listener.
+  win.stuffOff = function(event) {
+    var eventName = customEventName(event);
+    delete actions[eventName];
+  }
 })(window);

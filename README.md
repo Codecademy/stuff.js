@@ -92,8 +92,19 @@ Is just the iframe element available for DOM manipulation. Note that if you move
 ### Custom events
 
 Sometimes you may find yourself wanting to communicate back to the outside world from inside the execution
-context. You can do this simply by calling: `window.parent.stuffEmit(event, data)`. On the top window you
-can use the `Context#on` and `Context#off` to add or remove custom events.
+context.
+
+#### window.parent.stuffEmit(event, data)
+
+Emit an event to the conetxt. See `Context#on` to listen on this.
+
+#### window.parent.stuffOn(event, data)
+
+Listen to event sent by `context.emit`.
+
+#### Context#emit(event, data)
+
+Emit events that can be listened on via `window.parent.stuffOn`.
 
 #### Context#on(event, cb(data))
 
@@ -113,5 +124,5 @@ Tested on:
 * Safari 6
 
 ## License
-MIT License.  
+MIT License.
 Copyright (c) 2012 Amjad Masad &lt;amjad@codecademy.com&gt; Ryzac, Inc.
