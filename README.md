@@ -1,12 +1,10 @@
-Stuff.js
---------
+## Stuff.js
 
 A secure and easy way to run arbitrary HTML / JS / CSS code in an iframe.
 
 Stuff.js is a client-side JS library that is meant to be loaded from different [origins](https://developer.mozilla.org/en-US/docs/JavaScript/Same_origin_policy_for_JavaScript) to restrict access from the iframe to it's parent(s). [Read more](http://blog.amasad.me/2012/12/11/stuffjs/).
 
 Node is only required for testing and developlment and is only used as a static server. Feel free to use your web server of choice.
-
 
 ## Run the example
 
@@ -15,8 +13,6 @@ node dist/example/server.js
 ```
 
 Navigate browser to http://localhost:8080/example
-
-
 
 ## Running Tests
 
@@ -35,19 +31,16 @@ To build:
 node build.js
 ```
 
-
 ## Usage
 
 Place the secure folder on a different origin you intend to use stuff.js.
 Origin could mean different protocol, port, and or domain name.
 
 ```javascript
-
 stuff(secureUrl, function (context) {
-  context.load('<body>stuff</body>');
+  context.load("<body>stuff</body>");
 });
 ```
-
 
 ## API
 
@@ -57,11 +50,10 @@ The main constructor function that loads the secure iframe from `url` and
 calls `cb` with the context (see below). Optionally, you can pass in an
 options object as the second argument and can contain any of the following:
 
-* `el` an element to append the iframe to. Defaults to the body.
-* `sandbox` You can pass in a space delimited string of the [HTML5 sandbox flags](http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/) or simply `true` to add the attribute with the minimum flags needed to function:
-  * `allow-scripts` needed for the iframe to function.
-  *  `allow-same-origin` needed for basic interactions with the iframe.
-
+- `el` an element to append the iframe to. Defaults to the body.
+- `sandbox` You can pass in a space delimited string of the [HTML5 sandbox flags](http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/) or simply `true` to add the attribute with the minimum flags needed to function:
+  - `allow-scripts` needed for the iframe to function.
+  - `allow-same-origin` needed for basic interactions with the iframe.
 
 ### stuff.clear()
 
@@ -84,10 +76,9 @@ and the result.
 
 Gets the current iframe document html.
 
-
 ### Context#iframe
 
-Is just the iframe element available for DOM manipulation. Note that if you move the iframe, it has to reload and will *lose all code and state*.
+Is just the iframe element available for DOM manipulation. Note that if you move the iframe, it has to reload and will _lose all code and state_.
 
 ### Custom events
 
@@ -118,11 +109,12 @@ Remove callback `cb` if specified. Otherwise nuke all listeners.
 
 Tested on:
 
-* Latest Chrome and Firefox.
-* Opera 12+
-* IE9 and IE10
-* Safari 6
+- Latest Chrome and Firefox.
+- Opera 12+
+- IE9 and IE10
+- Safari 6
 
 ## License
+
 MIT License.
-Copyright (c) 2012 Amjad Masad &lt;amjad@codecademy.com&gt; Ryzac, Inc.
+Copyright (c) 2022 Codecademy LLC
